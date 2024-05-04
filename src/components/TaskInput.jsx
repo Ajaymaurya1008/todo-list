@@ -1,24 +1,29 @@
+/* eslint-disable no-unused-vars */
 import toast from "react-hot-toast";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addTask } from "../features/tasks/taskSlice";
+import { useSelector } from "react-redux";
 
 const TaskInput = () => {
-  const [tasks, setTasks] = useState([]);
-
   const [newTask, setNewTask] = useState("");
+  const tasks = useSelector((state) => state.tasks);
 
-  const handleChange = (e) => {
-    setNewTask(e.target.value);
-  };
+  const dispatch = useDispatch();
 
   const handleTask = (e) => {
     e.preventDefault();
-    if (newTask === "") {
+    if (newTask.trim() === "") {
       toast.error("Please type a task");
       return;
     }
-    setTasks([newTask, ...tasks]);
-    setNewTask("");
+    dispatch(addTask({ text: newTask, completed: false }));
     toast.success("Task added successfully");
+    setNewTask("");
+  };
+
+  const handleChange = (e) => {
+    setNewTask(e.target.value);
   };
 
   return (
