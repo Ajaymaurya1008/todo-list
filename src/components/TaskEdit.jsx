@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { editTask } from "../features/tasks/taskSlice";
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 const TaskEdit = () => {
   const { taskId } = useParams();
@@ -16,6 +17,8 @@ const TaskEdit = () => {
       navigate("/");
     }
   }, [task, navigate]);
+  {
+  }
 
   const handleSave = () => {
     dispatch(
@@ -24,27 +27,28 @@ const TaskEdit = () => {
         newValue: { text: taskText, completed },
       })
     );
+    toast.success("task updated successfully");
     navigate("/");
   };
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-xl font-bold mb-4">Edit Task</h1>
+      <h1 className="text-3xl font-bold mb-10">Edit Task</h1>
       <input
         type="text"
         value={taskText}
         onChange={(e) => setTaskText(e.target.value)}
         className="input input-bordered w-full mb-4"
       />
-      <label className="label flex gap-2 cursor-pointer">
-        <span className="label-tex font-medium">Completed</span>
+      <div className=" flex mb-8 gap-2 cursor-pointer">
+        <span className="font-medium">Completed</span>
         <input
           type="checkbox"
           checked={completed}
           onChange={(e) => setCompleted(e.target.checked)}
           className="checkbox checkbox-primary"
         />
-      </label>
+      </div>
       <button onClick={handleSave} className="btn btn-primary">
         Save Changes
       </button>

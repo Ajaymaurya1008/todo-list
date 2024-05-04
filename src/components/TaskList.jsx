@@ -3,6 +3,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteTask } from "../features/tasks/taskSlice";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const TaskList = () => {
   const tasks = useSelector((state) => state.tasks);
@@ -11,6 +12,7 @@ const TaskList = () => {
 
   const handleDelete = (index) => {
     dispatch(deleteTask(index));
+    toast.success("Task deleted successfully")
   };
 
   const handleEdit = (index) => {
